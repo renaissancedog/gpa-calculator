@@ -10,6 +10,12 @@
 
   let types = ['Regular', 'Honors', 'AP'];
   $effect(() => {
+    if (amount > 100) {
+      amount = 100;
+    }
+    if (amount < 0) {
+      amount = 0;
+    }
     const copyGrade = untrack(() => get(grades));
     const copyWeight = untrack(() => get(weights));
     copyGrade[parseInt(id)] = amount;
@@ -47,7 +53,7 @@
   </div>
   <input
     bind:value={amount}
-    placeholder="Enter grade"
+    placeholder="Grade"
     class="mb-2 w-full rounded-lg border-2 border-gray-300 p-2 focus:border-blue-500 focus:outline-none"
   />
 </div>

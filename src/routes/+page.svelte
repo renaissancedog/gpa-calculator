@@ -48,6 +48,15 @@
 </script>
 
 <div class="space-y-4">
+  <div
+    class="sticky top-0 z-50 mx-auto h-auto min-h-[110px] w-screen items-center bg-gray-50 p-4 px-12 text-center text-2xl"
+  >
+    <h1 class="text-5xl">
+      Your GPA is:
+      <span class="font-bold text-sky-600">{gpa}</span>
+      ({uwgpa} unweighted)
+    </h1>
+  </div>
   <div class="mb-4 space-y-4 text-xl">
     <h1 class="bold text-center text-5xl">Reagan GPA Calculator</h1>
     <p>
@@ -56,7 +65,9 @@
       your GPA over 4 years at Reagan!
     </p>
   </div>
-  <div class="mx-auto grid w-3/4 grid-cols-4 items-center justify-center gap-2">
+  <div
+    class="mx-auto items-center justify-center gap-2 px-2 lg:grid lg:w-3/4 lg:grid-cols-4"
+  >
     {#each items as id}
       {#if id % 7 == 0}
         <h2 class="col-span-4 text-center text-3xl">
@@ -65,14 +76,6 @@
       {/if}
       <Input {id} amount={$grades[id]} classType={$weights[id]} />
     {/each}
-  </div>
-
-  <div>
-    <h1 class="text-5xl">
-      Your GPA is:
-      <span class="font-bold text-sky-600">{gpa}</span>
-      ({uwgpa} unweighted)
-    </h1>
   </div>
   <button
     class="dropbtn mr-2 rounded-lg border-2 bg-gray-50 p-2 hover:bg-gray-100"
