@@ -60,13 +60,15 @@
       ({uwgpa.toFixed(3)} unweighted)
     </h1>
   </div>
-  <div class="mb-4 space-y-4 text-xl">
-    <h1 class="bold text-center text-5xl">Reagan GPA Calculator</h1>
+  <div class="mb-4 text-xl">
+    <h1 class="bold mb-4 text-center text-5xl">Reagan GPA Calculator</h1>
     <p>
-      Are you an academic tryhard? Are you constantly optimizing time spent in
-      your classes to maximize your GPA? Then this is the app for you! Calculate
-      your GPA over 4 years at Reagan!
+      Are you an academic tryhard? Are you constantly worrying about and trying
+      to maximize your GPA? Then this is the app for you!
     </p>
+    <a class="text-sky-600 underline" href="https://www.neisd.net/class-rank"
+      >NEISD GPA Guidelines</a
+    >
   </div>
   <div
     class="mx-auto items-center justify-center gap-2 px-2 lg:grid lg:w-3/4 lg:grid-cols-4"
