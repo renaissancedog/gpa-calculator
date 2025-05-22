@@ -32,19 +32,21 @@
   }
   grades.subscribe(() => updateGPA());
   function williamGrades() {
-    let MG = new Array(56).fill(null);
+    let MG = new Array(63).fill(null);
     for (let i = 0; i < WG.length; i++) {
       MG[i] = WG[i];
     }
+    MG[56] = 100;
     grades.set(MG);
-    let MW = new Array(56).fill('Regular');
+    let MW = new Array(63).fill('Regular');
     for (let i = 0; i < WG.length; i++) {
       MW[i] = WW[i];
     }
+    MW[56] = 'Regular';
     weights.set(MW);
     updateGPA();
   }
-  const items = Array.from({ length: 56 }, (_, i) => `${i}`);
+  const items = Array.from({ length: 63 }, (_, i) => `${i}`);
 </script>
 
 <div class="space-y-4">
@@ -69,10 +71,13 @@
     class="mx-auto items-center justify-center gap-2 px-2 lg:grid lg:w-3/4 lg:grid-cols-4"
   >
     {#each items as id}
-      {#if id % 7 == 0}
+      {#if id % 7 == 0 && id < 56}
         <h2 class="col-span-4 text-center text-3xl">
           Semester {Math.floor(id / 7) + 1}
         </h2>
+      {/if}
+      {#if id == 56}
+        <h2 class="col-span-4 text-center text-3xl">Miscellaneous</h2>
       {/if}
       <Input {id} amount={$grades[id]} classType={$weights[id]} />
     {/each}
