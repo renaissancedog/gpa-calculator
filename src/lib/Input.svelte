@@ -1,42 +1,21 @@
 <script>
   import { get } from 'svelte/store';
-  import { grades, credits } from './stores';
+  import { grades, weights } from './stores';
   import { untrack } from 'svelte';
-
-  let { id } = $props();
+  let { id, amount = '', classType = 'Regular' } = $props();
   let dropdownOpen = $state(false);
-  let amount = $state('');
-  let classType = $state('Regular');
-
   let toggleDropdown = () => {
     dropdownOpen = !dropdownOpen;
   };
 
   let types = ['Regular', 'Honors', 'AP'];
-
-  let weightedGrade = $derived.by(() => {
-    const numericAmount = parseFloat(amount);
-    if (isNaN(numericAmount) || amount === '') {
-      return 0;
-    }
-    switch (classType) {
-      case 'Regular':
-        return numericAmount;
-      case 'Honors':
-        return numericAmount * 1.08;
-      case 'AP':
-        return numericAmount * 1.15;
-      default:
-        return numericAmount;
-    }
-  });
   $effect(() => {
-    const copy = untrack(() => get(grades));
-    const copyCredit = untrack(() => get(credits));
-    copy[parseInt(id)] = weightedGrade;
-    copyCredit[parseInt(id)] = 0.5;
-    grades.set(copy);
-    credits.set(copyCredit);
+    const copyGrade = untrack(() => get(grades));
+    const copyWeight = untrack(() => get(weights));
+    copyGrade[parseInt(id)] = amount;
+    copyWeight[parseInt(id)] = classType;
+    grades.set(copyGrade);
+    weights.set(copyWeight);
   });
 </script>
 

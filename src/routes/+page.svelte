@@ -1,26 +1,49 @@
 <script>
   import Input from '$lib/Input.svelte';
   import { get } from 'svelte/store';
-  let gpa = $state(100);
-  import { grades, credits } from '$lib/stores';
-  grades.subscribe(() => {
+  let gpa = $state();
+  let uwgpa = $state();
+  import { grades, weights, WG, WW } from '$lib/stores';
+  function updateGPA() {
     const currentGrades = get(grades);
-    const currentCredits = get(credits);
-
-    let totalWeightedPoints = 0;
+    const currentWeights = get(weights);
     let totalCredits = 0;
+    let totalPoints = 0;
+    let totalWeightedPoints = 0;
     currentGrades.forEach((grade, index) => {
       if (grade > 0) {
-        const credit = currentCredits[index] || 0.5;
-        totalWeightedPoints += grade;
-        totalCredits += credit;
+        totalCredits += 0.5;
+        if (currentWeights[index] == 'AP') {
+          totalWeightedPoints += parseFloat(1.15 * grade);
+        } else if (currentWeights[index] == 'Honors') {
+          totalWeightedPoints += parseFloat(1.08 * grade);
+        } else {
+          totalWeightedPoints += parseFloat(grade);
+        }
+        totalPoints += parseFloat(grade);
       }
     });
+    uwgpa =
+      totalCredits > 0 ? (totalPoints / (2 * totalCredits)).toFixed(3) : 0;
     gpa =
       totalCredits > 0
         ? (totalWeightedPoints / (2 * totalCredits)).toFixed(3)
         : 0;
-  });
+  }
+  grades.subscribe(() => updateGPA());
+  function williamGrades() {
+    let MG = new Array(56).fill(null);
+    for (let i = 0; i < WG.length; i++) {
+      MG[i] = WG[i];
+    }
+    grades.set(MG);
+    let MW = new Array(56).fill('Regular');
+    for (let i = 0; i < WG.length; i++) {
+      MW[i] = WW[i];
+    }
+    weights.set(MW);
+    updateGPA();
+  }
   const items = Array.from({ length: 56 }, (_, i) => `${i}`);
 </script>
 
@@ -40,7 +63,7 @@
           Semester {Math.floor(id / 7) + 1}
         </h2>
       {/if}
-      <Input {id} />
+      <Input {id} amount={$grades[id]} classType={$weights[id]} />
     {/each}
   </div>
 
@@ -48,6 +71,11 @@
     <h1 class="text-5xl">
       Your GPA is:
       <span class="font-bold text-sky-600">{gpa}</span>
+      ({uwgpa} unweighted)
     </h1>
   </div>
+  <button
+    class="dropbtn mr-2 rounded-lg border-2 bg-gray-50 p-2 hover:bg-gray-100"
+    onclick={williamGrades}>William button</button
+  >
 </div>
