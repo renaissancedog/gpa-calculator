@@ -27,6 +27,8 @@
     gpa = totalCredits > 0 ? totalWeightedPoints / (2 * totalCredits) : 0;
     console.log('GPA:', gpa);
     console.log('Unweighted GPA:', uwgpa);
+    console.log('Total Points:', totalPoints);
+    console.log('Total Weighted Points:', totalWeightedPoints);
     console.log('Total Credits:', totalCredits);
   }
   grades.subscribe(() => updateGPA());
