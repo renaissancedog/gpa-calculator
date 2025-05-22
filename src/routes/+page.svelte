@@ -23,12 +23,11 @@
         totalPoints += parseFloat(grade);
       }
     });
-    uwgpa =
-      totalCredits > 0 ? (totalPoints / (2 * totalCredits)).toFixed(3) : 0;
-    gpa =
-      totalCredits > 0
-        ? (totalWeightedPoints / (2 * totalCredits)).toFixed(3)
-        : 0;
+    uwgpa = totalCredits > 0 ? totalPoints / (2 * totalCredits) : 0;
+    gpa = totalCredits > 0 ? totalWeightedPoints / (2 * totalCredits) : 0;
+    console.log('GPA:', gpa);
+    console.log('Unweighted GPA:', uwgpa);
+    console.log('Total Credits:', totalCredits);
   }
   grades.subscribe(() => updateGPA());
   function williamGrades() {
@@ -55,8 +54,8 @@
   >
     <h1 class="text-5xl">
       Your GPA is:
-      <span class="font-bold text-sky-600">{gpa}</span>
-      ({uwgpa} unweighted)
+      <span class="font-bold text-sky-600">{gpa.toFixed(3)}</span>
+      ({uwgpa.toFixed(3)} unweighted)
     </h1>
   </div>
   <div class="mb-4 space-y-4 text-xl">
