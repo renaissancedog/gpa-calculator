@@ -34,18 +34,17 @@
   grades.subscribe(() => updateGPA());
   function williamGrades() {
     let MG = new Array(63).fill(null);
+    let MW = new Array(63).fill('Regular');
     for (let i = 0; i < WG.length; i++) {
       MG[i] = WG[i];
     }
-    MG[56] = 100;
-    grades.set(MG);
-    let MW = new Array(63).fill('Regular');
     for (let i = 0; i < WG.length; i++) {
       MW[i] = WW[i];
     }
+    MG[56] = 100;
     MW[56] = 'Regular';
+    grades.set(MG);
     weights.set(MW);
-    updateGPA();
   }
   const items = Array.from({ length: 63 }, (_, i) => `${i}`);
 </script>

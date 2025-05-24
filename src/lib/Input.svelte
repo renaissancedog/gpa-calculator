@@ -3,12 +3,14 @@
   import { grades, weights } from './stores';
   import { untrack } from 'svelte';
   let { id, amount = '', classType = 'Regular' } = $props();
-  let dropdownOpen = $state(false);
-  let toggleDropdown = () => {
-    dropdownOpen = !dropdownOpen;
+  let toggleType = () => {
+    classType =
+      classType === 'Regular'
+        ? 'Honors'
+        : classType === 'Honors'
+          ? 'AP'
+          : 'Regular';
   };
-
-  let types = ['Regular', 'Honors', 'AP'];
   $effect(() => {
     if (amount > 100) {
       amount = 100;
@@ -26,30 +28,13 @@
 </script>
 
 <div {id} class="flex flex-row">
-  <div class="dropdown relative text-left">
+  <div class="relative text-left">
     <button
-      class="dropbtn mr-2 rounded-lg border-2 bg-gray-50 p-2 hover:bg-gray-100"
-      onclick={toggleDropdown}
+      class="mr-2 rounded-lg border-2 bg-gray-50 p-2 hover:bg-gray-100"
+      onclick={toggleType}
     >
       {classType}
     </button>
-    {#if dropdownOpen}
-      <div
-        class="dropdown-content absolute z-10 min-w-40 rounded-lg border border-gray-300 bg-white shadow-lg"
-      >
-        {#each types as type}
-          <button
-            class="block w-full p-2 text-left first:rounded-t-lg last:rounded-b-lg hover:bg-gray-100"
-            onclick={() => {
-              classType = type;
-              dropdownOpen = false;
-            }}
-          >
-            {type}
-          </button>
-        {/each}
-      </div>
-    {/if}
   </div>
   <input
     bind:value={amount}
