@@ -38,6 +38,7 @@
   </div>
   <input
     bind:value={amount}
+    type="number"
     placeholder="Grade"
     class="mb-2 w-full rounded-lg border-2 border-gray-300 p-2 focus:border-blue-500 focus:outline-none"
   />
